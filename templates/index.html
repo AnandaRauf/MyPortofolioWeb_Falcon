@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>My Portfolio</h1>
+    </header>
+
+    <section id="about-me">
+        <h2>About Me</h2>
+        <div id="about-me-content">
+            <p>Loading...</p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <div id="skills-content">
+            <p>Loading...</p>
+        </div>
+    </section>
+
+    <section id="work-experience">
+        <h2>Work Experience</h2>
+        <div id="work-experience-content">
+            <p>Loading...</p>
+        </div>
+    </section>
+
+    <script>
+        
+        async function fetchData() {
+            try {
+                
+                const aboutMeResponse = await fetch('/about-me');
+                const aboutMeData = await aboutMeResponse.json();
+                document.getElementById('about-me-content').innerHTML = `
+                    <p><strong>Name:</strong> ${aboutMeData.name}</p>
+                    <p><strong>Description:</strong> ${aboutMeData.description}</p>
+                    <p><strong>Email:</strong> ${aboutMeData.email}</p>
+                `;
+
+                
+                const skillsResponse = await fetch('/skills');
+                const skillsData = await skillsResponse.json();
+                document.getElementById('skills-content').innerHTML = `
+                    <p><strong>Programming Languages:</strong> ${skillsData.programming_languages.join(', ')}</p>
+                    <p><strong>Frameworks:</strong> ${skillsData.frameworks.join(', ')}</p>
+                    <p><strong>Tools:</strong> ${skillsData.tools.join(', ')}</p>
+                `;
+
+                
+                const workExpResponse = await fetch('/work-ex');
+                const workExpData = await workExpResponse.json();
+                let workExpHtml = '';
+                workExpData.forEach(exp => {
+                    workExpHtml += `
+                        <div>
+                            <h3>${exp.company} - ${exp.position}</h3>
+                            <p><strong>Duration:</strong> ${exp.duration}</p>
+                            <ul>
+                                ${exp.responsibilities.map(resp => `<li>${resp}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                });
+                document.getElementById('work-experience-content').innerHTML = workExpHtml;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Jalankan fungsi fetchData saat halaman dimuat
+        fetchData();
+    </script>
+</body>
+</html>
