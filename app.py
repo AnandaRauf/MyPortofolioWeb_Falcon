@@ -19,7 +19,7 @@ class Skills:
         skills = {
             "programming_languages": ["Python", "Visual Basic", "Dart"],
             "frameworks": ["Falcon", "Flask", "Sanic", "Flutter", ".Net"],
-            "tools": ["Visual Studio Code","PyCharm","Git", "Docker", "DBEaver","Laragon"]
+            "tools": ["Visual Studio Code","Visual Studio Community","PyCharm","Git", "Docker", "DBEaver","Laragon"]
         }
         resp.media = skills
 
@@ -57,7 +57,7 @@ class StaticFiles:
             file_path = os.path.join(os.getcwd(), 'static', file_name)
             with open(file_path, 'r', encoding='utf-8') as f:
                 resp.content_type = 'text/css'
-                resp.text = f.read() 
+                resp.text = f.read()  
         except FileNotFoundError:
             resp.status = falcon.HTTP_404
             resp.text = f"File {file_name} not found"  
