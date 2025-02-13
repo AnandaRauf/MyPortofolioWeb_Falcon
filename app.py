@@ -57,10 +57,10 @@ class StaticFiles:
             file_path = os.path.join(os.getcwd(), 'static', file_name)
             with open(file_path, 'r', encoding='utf-8') as f:
                 resp.content_type = 'text/css'
-                resp.text = f.read()  # Menggunakan `text`
+                resp.text = f.read() 
         except FileNotFoundError:
             resp.status = falcon.HTTP_404
-            resp.text = f"File {file_name} not found"  # Menggunakan `text`
+            resp.text = f"File {file_name} not found"  
 
 
 app = App()
